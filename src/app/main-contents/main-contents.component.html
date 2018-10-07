@@ -1,0 +1,26 @@
+<app-header [colorCode]="colorCode" style="margin: 0;"></app-header>
+<div id="search-form">
+  <form class="search-form">
+    <mat-form-field class="mat-form-field">
+      <input matInput placeholder="Serach name" name="search" [(ngModel)]="searchWord">
+    </mat-form-field>
+  </form>
+  <button mat-raised-button class="mat-raised-button" [style.background-color]="colorCode" (click)="fetchIdol()">Search</button>
+</div>
+<app-result-data-list
+  [arrivalDate]="arrivalDate"
+  [birthDay]="birthDay"
+  [birthMonth]="birthMonth"
+  [type]="type"
+  [voiceActor]="voiceActor"
+  [familyName]="familyName"
+  [familyNameRuby]="familyNameRuby"
+  [firstName]="firstName"
+  [firstNameRuby]="firstNameRuby"
+  [gender]="gender"
+  [id]="id"
+  [foreignerName]="foreignerName"
+  [isIdol]="isIdol"
+  [originMedia]="originMedia"
+  [className]="className">
+</app-result-data-list>

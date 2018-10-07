@@ -1,0 +1,22 @@
+#page {
+  display: flex;
+  width: 100%;
+}
+
+#profile {
+  /* display: inline-block; */
+  width: 60%;
+  min-width: 450px;
+  max-width: 500px;
+  /* margin: 0 0 0 20px; */
+}
+
+#photo {
+  /* display: inline-block; */
+  width: 40%;
+  height: 358px;
+}
+
+#photo img{
+  height: 100%;
+}
