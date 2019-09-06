@@ -1,0 +1,31 @@
+export class Profile {
+  birthMonth: string;
+  birthDay: string;
+  birthPlace: string;
+  familyName: string;
+  gender: string;
+  givenName: string;
+  height: string;
+  weight: string;
+  age: number;
+  bloodType: string;
+  color: string;
+  constellation: string;
+  handedness: string;
+  hobby: string;
+  title: string;
+  cv: string;
+  familyNameKana: string;
+  givenNameKana: string;
+  bust: number;
+  waist: number;
+  hip: number;
+  talent: string;
+  attribute: string;
+  division: string;
+  favorite: string;
+  description: string;
+  type: string;
+  category: string;
+  shoeSize: string;
+}

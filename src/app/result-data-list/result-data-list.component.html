@@ -1,39 +1,25 @@
-<div id="page">
-  <mat-list id="profile">
-    <mat-list-item>
-      名前 : {{ familyName }}{{ givenName }}
-      <span *ngIf="familyNameKana">
-        ({{ familyNameKana }} {{ givenNameKana }})
-      </span>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>年齢 : {{ age }}</mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>誕生日 : {{ birthMonth }}月{{ birthDay }}日</mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>星座 : {{ constellation }}</mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>性別 : {{ gender }}</mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>身長 : {{ height }}</mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>体重 : {{ weight }}</mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>スリーサイズ : <span *ngIf="familyNameKana"> {{ bust }}/{{ waist }}/{{ hip }}</span></mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>特技 : {{ talent }}</mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>好きなもの : {{ favorite }}</mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>趣味 : {{ hobby }}</mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>タイプ : {{ division }}</mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>所属 : {{ title }}</mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item>CV : {{ cv }}</mat-list-item>
-  </mat-list>
+<div *ngIf="profile">
   <div id="photo">
     <img [src]="illustrationUrl">
-  </div>    
+  </div>
+
+  <app-profile-detail-million 
+    *ngIf="profile.title === '765AS' || profile.title === 'MillionStars'"
+    [profile]="profile">
+  </app-profile-detail-million>
+
+  <app-profile-detail-cinderella
+    *ngIf="profile.title === 'CinderellaGirls'"
+    [profile]="profile">
+  </app-profile-detail-cinderella>
+
+  <app-profile-detail-shinycolors
+    *ngIf="profile.title === '283Pro'"
+    [profile]="profile">
+  </app-profile-detail-shinycolors>
+
+  <app-profile-detail-sidem
+    *ngIf="profile.title === '315ProIdols'"
+    [profile]="profile">
+  </app-profile-detail-sidem>
 </div>

@@ -1,34 +1,14 @@
-<app-header [colorCode]="colorCode" style="margin: 0;"></app-header>
-<div id="search-form">
-  <form class="search-form">
-    <mat-form-field class="mat-form-field">
-      <input matInput placeholder="Serach name" name="search" [(ngModel)]="searchWord">
-    </mat-form-field>
-  </form>
-  <button mat-raised-button class="mat-raised-button" [style.background-color]="colorCode" (click)="fetchIdol()">Search</button>
-</div>
+<app-header
+  [colorCode]="colorCode"
+  style="margin: 0;">
+</app-header>
+
+<app-form-single-textfield
+  [placeholder]="'検索アイドル名'"
+  (clickEmit)="fetchIdol($event)">
+</app-form-single-textfield>
+
 <app-result-data-list
-  [birthMonth]="birthMonth"
-  [birthDay]="birthDay"
-  [birthPlace]="birthPlace"
-  [familyName]="familyName"
-  [givenName]="givenName"
-  [familyNameKana]="familyNameKana"
-  [givenNameKana]="givenNameKana"
-  [age]="age"
-  [gender]="gender"
-  [height]="height"
-  [weight]="weight"
-  [bloodType]="bloodType"
-  [bust]="bust"
-  [waist]="waist"
-  [hip]="hip"
-  [talent]="talent"
-  [division]="division"
-  [constellation]="constellation"
-  [title]="title"
-  [cv]="cv"
-  [favorite]="favorite"
-  [hobby]="hobby"
+  [profile]="profile"
   [illustrationUrl]="illustrationUrl">
 </app-result-data-list>

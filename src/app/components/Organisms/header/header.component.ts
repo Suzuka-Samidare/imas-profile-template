@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IdolService } from '../idol.service';
+import { IdolService } from '../../../idol.service';
 
 @Component({
   selector: 'app-header',
