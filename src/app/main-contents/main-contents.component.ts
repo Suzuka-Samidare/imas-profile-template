@@ -24,17 +24,28 @@ export class MainContentsComponent implements OnInit {
     this.illustrationUrl = '../../assets/angular.png';
   }
 
-  fetchIdol(searchIdol: String) {
-    this.idolService.fetchIdolProfile(searchIdol)
-      .then(res => {
-        this.profile = res;
-        this.colorCode = `#${res.color}`;
-        // this.
-        // this.convRomaji(res.givenNameKana + ' ' + res.familyNameKana);
+  async fetchIdol(searchIdol: String) {
+    let profile;
+    // let colorCode;
+    let illustrationUrl;
+    await this.idolService.fetchIdolProfile(searchIdol)
+      .then((res: Profile) => {
+        profile = res;
       })
-      .catch(err => {
+      .catch((err: void) => {
         console.log('エラーだゾ');
       });
+    await this.idolService.fetchIdolImage(searchIdol)
+      .then((res) => {
+        illustrationUrl = res.data.result.src;
+      })
+      .catch((err: void) => {
+        console.log('画像が入手出来なかったゾ...');
+      });
+
+    this.profile = profile;
+    this.colorCode = `#${profile.color}`;
+    this.illustrationUrl = illustrationUrl;
   }
 
   // convRomaji(nameRuby) {

@@ -17,15 +17,15 @@ export class Profile {
   cv: string;
   familyNameKana: string;
   givenNameKana: string;
-  bust: number;
-  waist: number;
-  hip: number;
-  talent: string;
-  attribute: string;
-  division: string;
-  favorite: string;
-  description: string;
-  type: string;
-  category: string;
-  shoeSize: string;
+  bust: number | null;
+  waist: number | null;
+  hip: number | null;
+  talent: string | null;
+  attribute: string | null;
+  division: string | null;
+  favorite: string | null;
+  description: string | null;
+  type: string | null;
+  category: string | null;
+  shoeSize: string | null;
 }
