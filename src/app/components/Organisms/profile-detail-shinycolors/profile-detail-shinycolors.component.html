@@ -47,7 +47,7 @@
         <span class="label">利き手</span>
         <span class="data" *ngIf="profile"> {{ profile.handedness }}</span>
       </mat-list-item>
-      <mat-divider class="divider" *ngIf="innerWidth < 830"></mat-divider>
+      <mat-divider class="divider" *ngIf="innerWidth < 1125"></mat-divider>
     </mat-list>
   
     <mat-list class="detail-right" style="padding-top: 0px;">
@@ -62,13 +62,13 @@
       </mat-list-item>
       <mat-divider class="divider"></mat-divider>
       <mat-list-item class="row" style="height: 100%; min-height: 26px;">
-        <span class="label">趣味</span>
-        <span class="data" *ngIf="profile">{{ profile.hobby }}</span>
+        <span class="label">特技</span>
+        <span class="data" *ngIf="profile">{{ profile.talent }}</span>
       </mat-list-item>
       <mat-divider class="divider"></mat-divider>
       <mat-list-item class="row" style="height: 100%; min-height: 26px;">
-        <span class="label">タイプ</span>
-        <span class="data half-width-char" *ngIf="profile">{{ profile.type }}</span>
+        <span class="label">趣味</span>
+        <span class="data" *ngIf="profile">{{ profile.hobby }}</span>
       </mat-list-item>
       <mat-divider class="divider"></mat-divider>
       <mat-list-item class="row" style="height: 100%; min-height: 26px;">
@@ -84,6 +84,11 @@
       <mat-list-item class="row" style="height: 100%; min-height: 26px;">
         <span class="label">カラーコード</span>
         <span class="data half-width-char" *ngIf="profile">#{{ profile.color }}</span>
+      </mat-list-item>
+      <mat-divider class="divider"></mat-divider>
+      <mat-list-item style="height: 100%; min-height: 26px;">
+        <span class="label">人物像</span>
+        <span class="data" *ngIf="profile">{{ profile.description }}</span>
       </mat-list-item>
     </mat-list>
     <mat-divider class="divider"></mat-divider>

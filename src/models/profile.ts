@@ -2,9 +2,7 @@ export class Profile {
   birthMonth: string;
   birthDay: string;
   birthPlace: string;
-  familyName: string;
   gender: string;
-  givenName: string;
   height: string;
   weight: string;
   age: number;
@@ -15,8 +13,12 @@ export class Profile {
   hobby: string;
   title: string;
   cv: string;
+  familyName: string;
+  givenName: string;
+  alternateName: string;
   familyNameKana: string;
   givenNameKana: string;
+  alternateNameKana: string;
   bust: number | null;
   waist: number | null;
   hip: number | null;

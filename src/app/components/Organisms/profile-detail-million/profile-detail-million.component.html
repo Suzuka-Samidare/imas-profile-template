@@ -1,10 +1,16 @@
 <div class="profile">
   <mat-divider class="divider"></mat-divider>
   <mat-list class="detail-left" style="padding-top: 0px;">
-    <mat-list-item class="row" style="height: 100%; min-height: 26px;">
+    <mat-list-item *ngIf="profile.familyName !== null" class="row" style="height: 100%; min-height: 26px;">
       <span class="label">名前</span>
       <span class="data" *ngIf="profile">
         {{ profile.familyName }}{{ profile.givenName }}（{{ profile.familyNameKana }} {{ profile.givenNameKana }}）
+      </span>
+    </mat-list-item>
+    <mat-list-item *ngIf="profile.alternateName !== null" class="row" style="height: 100%; min-height: 26px;">
+      <span class="label">名前</span>
+      <span class="data" *ngIf="profile">
+        {{ profile.alternateName }}（{{ profile.alternateNameKana }}）
       </span>
     </mat-list-item>
     <mat-divider class="divider"></mat-divider>
@@ -47,7 +53,7 @@
       <span class="label">利き手</span>
       <span class="data" *ngIf="profile"> {{ profile.handedness }}</span>
     </mat-list-item>
-    <mat-divider class="divider" *ngIf="innerWidth < 830"></mat-divider>
+    <mat-divider class="divider" *ngIf="innerWidth < 1125"></mat-divider>
   </mat-list>
 
   <mat-list class="detail-right" style="padding-top: 0px;">

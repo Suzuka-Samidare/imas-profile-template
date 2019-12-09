@@ -23,75 +23,77 @@ export class IdolService {
     PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
 
     SELECT
-    ?birthDate ?birthPlace ?familyName ?gender ?givenName ?height ?weight ?age ?bloodType ?color ?constellation ?handedness
-    ?title ?cv ?familyNameKana ?givenNameKana ?bust ?waist ?hip ?attribute ?division ?description ?type ?category ?shoeSize
+    ?birthDate ?birthPlace ?gender ?height ?weight ?age ?bloodType ?color ?constellation ?handedness
+    ?title ?cv ?familyName ?givenName ?alternateName ?familyNameKana ?givenNameKana ?alternateNameKana
+    ?bust ?waist ?hip ?attribute ?division ?description ?type ?category ?shoeSize
     (GROUP_CONCAT(distinct ?Favorite;separator=",") as ?favorite)
     (GROUP_CONCAT(distinct ?Hobby;separator=",") as ?hobby)
     (GROUP_CONCAT(distinct ?Talent;separator=",") as ?talent)
     WHERE {
-      ?S1 schema:name ?O1 .
-      FILTER(regex(str(?O1), '^${name}$'))
-      ?S1 rdf:type ?O2;
+      ?data rdfs:label ?label;
       schema:birthDate ?birthDate;
-      schema:birthPlace ?birthPlace;
-      schema:familyName ?familyName;
       schema:gender ?gender;
-      schema:givenName ?givenName;
       schema:height ?height;
       schema:weight ?weight;
       foaf:age ?age;
       imas:BloodType ?bloodType;
-      imas:Color ?color;
       imas:Constellation ?constellation;
-      imas:Handedness ?handedness;
       imas:Hobby ?Hobby;
       imas:Title ?title;
       imas:cv ?cv;
-      imas:familyNameKana ?familyNameKana;
-      imas:givenNameKana ?givenNameKana;
-      OPTIONAL { ?S1 imas:Bust ?bust }.
-      OPTIONAL { ?S1 imas:Waist ?waist }.
-      OPTIONAL { ?S1 imas:Hip ?hip }.
-      OPTIONAL { ?S1 imas:Talent ?Talent }.
-      OPTIONAL { ?S1 imas:Attribute ?attribute }.
-      OPTIONAL { ?S1 imas:Division ?division }.
-      OPTIONAL { ?S1 imas:Favorite ?Favorite }.
-      OPTIONAL { ?S1 schema:description ?description }.
-      OPTIONAL { ?S1 imas:Type ?type }.
-      OPTIONAL { ?S1 imas:Category ?category }.
-      OPTIONAL { ?S1 imas:ShoeSize ?shoeSize }.
-      FILTER(LANG(?familyName) = 'ja')
-      FILTER(LANG(?givenName) = 'ja')
+      OPTIONAL { ?data schema:birthPlace ?birthPlace }
+      OPTIONAL { ?data imas:Color ?color }
+      OPTIONAL { ?data imas:Handedness ?handedness }
+      OPTIONAL { ?data schema:familyName ?familyName . FILTER(LANG(?familyName) = 'ja') }
+      OPTIONAL { ?data schema:givenName ?givenName . FILTER(LANG(?givenName) = 'ja') }
+      OPTIONAL { ?data schema:alternateName ?alternateName . FILTER(LANG(?alternateName) = 'ja') }
+      OPTIONAL { ?data imas:familyNameKana ?familyNameKana }
+      OPTIONAL { ?data imas:givenNameKana ?givenNameKana }
+      OPTIONAL { ?data imas:alternateNameKana ?alternateNameKana }
+      OPTIONAL { ?data imas:Bust ?bust }
+      OPTIONAL { ?data imas:Waist ?waist }
+      OPTIONAL { ?data imas:Hip ?hip }
+      OPTIONAL { ?data imas:Talent ?Talent }
+      OPTIONAL { ?data imas:Attribute ?attribute }
+      OPTIONAL { ?data imas:Division ?division }
+      OPTIONAL { ?data imas:Favorite ?Favorite }
+      OPTIONAL { ?data schema:description ?description }
+      OPTIONAL { ?data imas:Type ?type }
+      OPTIONAL { ?data imas:Category ?category }
+      OPTIONAL { ?data imas:ShoeSize ?shoeSize }
+      FILTER(regex(str(?label), '^${name}$'))
       FILTER(LANG(?cv) = 'ja')
     }
     GROUP BY
-    ?birthDate ?birthPlace ?familyName ?gender ?givenName ?height ?weight ?age ?bloodType ?color ?constellation ?handedness
-    ?title ?cv ?familyNameKana ?givenNameKana ?bust ?waist ?hip ?attribute ?division ?description ?type ?category ?shoeSize`;
+    ?birthDate ?birthPlace ?gender ?height ?weight ?age ?bloodType ?color ?constellation ?handedness
+    ?title ?cv ?familyName ?givenName ?alternateName ?familyNameKana ?givenNameKana ?alternateNameKana
+    ?bust ?waist ?hip ?attribute ?division ?description ?type ?category ?shoeSize`;
 
     let profile: Profile;
     await axios.get(`${endPoint}?query=${encodeURIComponent(query)}`)
       .then((res) => {
         const results = res.data.results.bindings[0];
-        console.log(results);
         const obj: Profile = {
           birthMonth: results.birthDate.value.slice(2, 4),
           birthDay: results.birthDate.value.slice(-2),
-          birthPlace: results.birthPlace.value,
-          familyName: results.familyName.value,
           gender: results.gender.value === 'female' ? '女性' : '男性',
-          givenName: results.givenName.value,
           height: results.height.value,
           weight: results.weight.value,
           age: Number(results.age.value),
           bloodType: results.bloodType.value,
-          color: results.color.value,
           constellation: results.constellation.value,
-          handedness: results.handedness.value === 'right' ? '右' : '左',
           hobby: results.hobby.value,
           title: results.title.value,
           cv: results.cv.value,
-          familyNameKana: results.familyNameKana.value,
-          givenNameKana: results.givenNameKana.value,
+          birthPlace: results.birthPlace !== undefined ? results.birthPlace.value : null,
+          color: results.color !== undefined ? results.color.value : null,
+          handedness: results.handedness !== undefined ? (results.handedness.value === 'right' ? '右' : '左') : null,
+          familyName: results.familyName !== undefined ? results.familyName.value : null,
+          givenName: results.givenName !== undefined ? results.givenName.value : null,
+          alternateName: results.alternateName !== undefined ? results.alternateName.value : null,
+          familyNameKana: results.familyNameKana !== undefined ? results.familyNameKana.value : null,
+          givenNameKana: results.givenNameKana !== undefined ? results.givenNameKana.value : null,
+          alternateNameKana: results.alternateNameKana !== undefined ? results.alternateNameKana.value : null,
           bust: results.bust !== undefined ? Number(results.bust.value) : null,
           waist: results.waist !== undefined ? Number(results.waist.value) : null,
           hip: results.hip !== undefined ? Number(results.hip.value) : null,
