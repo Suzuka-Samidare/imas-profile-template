@@ -9,8 +9,6 @@ import { Profile } from '../../models/profile';
   styleUrls: ['./main-contents.component.css']
 })
 export class MainContentsComponent implements OnInit {
-  // public searchWord: string;
-
   public profile: Profile;
   public colorCode: string;
 
@@ -26,24 +24,24 @@ export class MainContentsComponent implements OnInit {
 
   async fetchIdol(searchIdol: String) {
     let profile;
-    // let colorCode;
     let illustrationUrl;
     await this.idolService.fetchIdolProfile(searchIdol)
       .then((res: Profile) => {
         profile = res;
       })
       .catch((err: void) => {
-        console.log('エラーだゾ');
+        alert('プロフィール取得のエラーだぞ...');
       });
     await this.idolService.fetchIdolImage(searchIdol)
       .then((res) => {
         illustrationUrl = res.data.result.src;
       })
       .catch((err: void) => {
-        console.log('画像が入手出来なかったゾ...');
+        alert('画像が入手出来なかったぞ...');
       });
 
     this.profile = profile;
+    console.log(profile.color);
     if (profile.color !== null) {
       this.colorCode = `#${profile.color}`;
     } else {

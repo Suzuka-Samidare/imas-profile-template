@@ -14,12 +14,8 @@ export class IdolService {
     // SPARQL access
     const endPoint = 'https://sparql.crssnky.xyz/spql/imas/query';
     const query = `PREFIX schema: <http://schema.org/>
-    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX imas: <https://sparql.crssnky.xyz/imasrdf/URIs/imas-schema.ttl#>
-    PREFIX imasrdf: <https://sparql.crssnky.xyz/imasrdf/RDFs/detail/>
     PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-    PREFIX math: <http://www.w3.org/2005/xpath-functions/math#>
-    PREFIX xsd: <https://www.w3.org/TR/xmlschema11-2/#>
     PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
 
     SELECT
@@ -31,36 +27,36 @@ export class IdolService {
     (GROUP_CONCAT(distinct ?Talent;separator=",") as ?talent)
     WHERE {
       ?data rdfs:label ?label;
-      schema:birthDate ?birthDate;
       schema:gender ?gender;
-      schema:height ?height;
-      schema:weight ?weight;
-      foaf:age ?age;
-      imas:BloodType ?bloodType;
-      imas:Constellation ?constellation;
-      imas:Hobby ?Hobby;
       imas:Title ?title;
-      imas:cv ?cv;
-      OPTIONAL { ?data schema:birthPlace ?birthPlace }
-      OPTIONAL { ?data imas:Color ?color }
-      OPTIONAL { ?data imas:Handedness ?handedness }
+      imas:cv ?cv .
+      OPTIONAL { ?data foaf:age ?age . }
+      OPTIONAL { ?data schema:birthDate ?birthDate . }
+      OPTIONAL { ?data schema:birthPlace ?birthPlace . }
+      OPTIONAL { ?data imas:Constellation ?constellation . }
+      OPTIONAL { ?data imas:Hobby ?Hobby . }
+      OPTIONAL { ?data schema:height ?height . }
+      OPTIONAL { ?data schema:weight ?weight . }
+      OPTIONAL { ?data imas:BloodType ?bloodType . }
+      OPTIONAL { ?data imas:Color ?color . }
+      OPTIONAL { ?data imas:Handedness ?handedness . }
       OPTIONAL { ?data schema:familyName ?familyName . FILTER(LANG(?familyName) = 'ja') }
       OPTIONAL { ?data schema:givenName ?givenName . FILTER(LANG(?givenName) = 'ja') }
       OPTIONAL { ?data schema:alternateName ?alternateName . FILTER(LANG(?alternateName) = 'ja') }
-      OPTIONAL { ?data imas:familyNameKana ?familyNameKana }
-      OPTIONAL { ?data imas:givenNameKana ?givenNameKana }
-      OPTIONAL { ?data imas:alternateNameKana ?alternateNameKana }
-      OPTIONAL { ?data imas:Bust ?bust }
-      OPTIONAL { ?data imas:Waist ?waist }
-      OPTIONAL { ?data imas:Hip ?hip }
-      OPTIONAL { ?data imas:Talent ?Talent }
-      OPTIONAL { ?data imas:Attribute ?attribute }
-      OPTIONAL { ?data imas:Division ?division }
-      OPTIONAL { ?data imas:Favorite ?Favorite }
-      OPTIONAL { ?data schema:description ?description }
-      OPTIONAL { ?data imas:Type ?type }
-      OPTIONAL { ?data imas:Category ?category }
-      OPTIONAL { ?data imas:ShoeSize ?shoeSize }
+      OPTIONAL { ?data imas:familyNameKana ?familyNameKana . }
+      OPTIONAL { ?data imas:givenNameKana ?givenNameKana . }
+      OPTIONAL { ?data imas:alternateNameKana ?alternateNameKana . }
+      OPTIONAL { ?data imas:Bust ?bust . }
+      OPTIONAL { ?data imas:Waist ?waist . }
+      OPTIONAL { ?data imas:Hip ?hip . }
+      OPTIONAL { ?data imas:Talent ?Talent . }
+      OPTIONAL { ?data imas:Attribute ?attribute . }
+      OPTIONAL { ?data imas:Division ?division . }
+      OPTIONAL { ?data imas:Favorite ?Favorite . }
+      OPTIONAL { ?data schema:description ?description . }
+      OPTIONAL { ?data imas:Type ?type . }
+      OPTIONAL { ?data imas:Category ?category . }
+      OPTIONAL { ?data imas:ShoeSize ?shoeSize . }
       FILTER(regex(str(?label), '^${name}$'))
       FILTER(LANG(?cv) = 'ja')
     }
@@ -73,20 +69,21 @@ export class IdolService {
     await axios.get(`${endPoint}?query=${encodeURIComponent(query)}`)
       .then((res) => {
         const results = res.data.results.bindings[0];
+        console.log(results);
         const obj: Profile = {
-          birthMonth: results.birthDate.value.slice(2, 4),
-          birthDay: results.birthDate.value.slice(-2),
           gender: results.gender.value === 'female' ? '女性' : '男性',
-          height: results.height.value,
-          weight: results.weight.value,
-          age: Number(results.age.value),
-          bloodType: results.bloodType.value,
-          constellation: results.constellation.value,
-          hobby: results.hobby.value,
           title: results.title.value,
           cv: results.cv.value,
+          age: results.age !== undefined ? Number(results.age.value) : null,
+          bloodType: results.bloodType !== undefined ? results.bloodType.value : null,
+          constellation: results.constellation !== undefined ? results.constellation.value : null,
+          hobby: results.hobby !== undefined ? results.hobby.value : null,
+          birthMonth: results.birthDate !== undefined ? results.birthDate.value.slice(2, 4) : null,
+          birthDay: results.birthDate !== undefined ? results.birthDate.value.slice(-2) : null,
           birthPlace: results.birthPlace !== undefined ? results.birthPlace.value : null,
           color: results.color !== undefined ? results.color.value : null,
+          height: results.height !== undefined ? results.height.value : null,
+          weight: results.weight !== undefined ? results.weight.value : null,
           handedness: results.handedness !== undefined ? (results.handedness.value === 'right' ? '右' : '左') : null,
           familyName: results.familyName !== undefined ? results.familyName.value : null,
           givenName: results.givenName !== undefined ? results.givenName.value : null,
